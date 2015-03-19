@@ -16,6 +16,7 @@ public class PiggyServer implements Runnable
 	private ServerSocket serverSocket;
 	private ObjectOutputStream output;
 	private ObjectInputStream input;
+	private boolean running;
 
 	public PiggyServer()
 	{
@@ -28,7 +29,11 @@ public class PiggyServer implements Runnable
 
 	public void startServer()
 	{
-		new Thread(this).start();
+		if (!running)
+		{
+			running = true;
+			new Thread(this).start();
+		}
 	}
 
 	@Override
@@ -36,7 +41,7 @@ public class PiggyServer implements Runnable
 	{
 		// Loop forever
 		Socket socket;
-		while (true)
+		while (running)
 		{
 			// Create a socket
 			socket = serverSocket.accept(null);

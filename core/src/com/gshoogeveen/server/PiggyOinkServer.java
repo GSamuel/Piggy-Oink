@@ -2,7 +2,6 @@ package com.gshoogeveen.server;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.gshoogeveen.entity.Entity;
-import com.gshoogeveen.entity.EntityFactory;
 import com.gshoogeveen.world.World;
 import com.gshoogeveen.world.WorldGen;
 

@@ -72,7 +72,7 @@ public class World implements IGameObjectAccess
 		qTree.insert(player);
 	}
 
-	public WorldSettings getWorldSettings()
+	public WorldSettings getWorldSettings()//TODO no settings yet
 	{
 		return settings;
 	}

@@ -11,6 +11,9 @@ import com.gshoogeveen.client.renderer.WorldRenderer;
 import com.gshoogeveen.client.textures.TextureBuilder;
 import com.gshoogeveen.entity.Entity;
 import com.gshoogeveen.entity.EntityFactory;
+import com.gshoogeveen.network.Packet;
+import com.gshoogeveen.network.PacketManager;
+import com.gshoogeveen.network.StringPacket;
 import com.gshoogeveen.world.World;
 import com.gshoogeveen.world.WorldGen;
 
@@ -33,7 +36,10 @@ public class PiggyOinkClient extends ApplicationAdapter
 	private Entity player;
 
 	// Connection
-	PiggyClient client;
+	private PacketManager packetManager;
+	private PiggyClient client;
+	
+	private double rand = Math.random();
 
 	@Override
 	public void create()
@@ -73,6 +79,19 @@ public class PiggyOinkClient extends ApplicationAdapter
 		// world.update();//model
 		if (client.connected())
 			worldRenderer.render();// view
+		
+		if(packetManager == null && client.hasPacketManager())
+		{
+			packetManager = client.getPacketManager();
+			packetManager.start();
+		}
+		
+		if(packetManager != null)
+		{
+			StringPacket p = new StringPacket();
+			p.setName(""+rand);
+			packetManager.sendPacket(p);
+		}
 	}
 
 	@Override

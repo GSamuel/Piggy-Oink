@@ -3,12 +3,14 @@ package com.gshoogeveen.server;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Net.Protocol;
 import com.badlogic.gdx.net.ServerSocket;
 import com.badlogic.gdx.net.ServerSocketHints;
 import com.badlogic.gdx.net.Socket;
+import com.gshoogeveen.network.PacketManager;
 
 public class PiggyServer implements Runnable
 {
@@ -17,9 +19,13 @@ public class PiggyServer implements Runnable
 	private ObjectOutputStream output;
 	private ObjectInputStream input;
 	private boolean running;
+	
+	private ConcurrentLinkedQueue<PacketManager> packetManagers;
 
 	public PiggyServer()
 	{
+		packetManagers = new ConcurrentLinkedQueue<PacketManager>();
+		
 		ServerSocketHints serverSocketHint = new ServerSocketHints();
 		serverSocketHint.acceptTimeout = 0;
 
@@ -34,6 +40,16 @@ public class PiggyServer implements Runnable
 			running = true;
 			new Thread(this).start();
 		}
+	}
+	
+	public boolean hasPacketManager()
+	{
+		return packetManagers.size()>0;
+	}
+	
+	public PacketManager getPacketManager()
+	{
+		return packetManagers.remove();
 	}
 
 	@Override
@@ -50,6 +66,7 @@ public class PiggyServer implements Runnable
 			{
 				output = new ObjectOutputStream(socket.getOutputStream());
 				input = new ObjectInputStream(socket.getInputStream());
+				packetManagers.add(	new PacketManager(input, output));
 			} catch (IOException e)
 			{
 				e.printStackTrace();

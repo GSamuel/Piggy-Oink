@@ -4,11 +4,10 @@ import com.gshoogeveen.network.play.INetHandlerPlayClient;
 
 public class NetHandlerPlayClient implements INetHandlerPlayClient
 {
-
+	
 	@Override
 	public void onDisconnect()
 	{
-		// TODO Auto-generated method stub
 		
 	}
 

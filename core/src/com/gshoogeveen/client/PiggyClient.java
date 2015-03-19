@@ -9,6 +9,7 @@ import com.badlogic.gdx.Net.Protocol;
 import com.badlogic.gdx.net.Socket;
 import com.badlogic.gdx.net.SocketHints;
 import com.badlogic.gdx.utils.GdxRuntimeException;
+import com.gshoogeveen.network.PacketManager;
 
 public class PiggyClient implements Runnable
 {
@@ -17,6 +18,7 @@ public class PiggyClient implements Runnable
 	private boolean connected = false;
 	private ObjectOutputStream output;
 	private ObjectInputStream input;
+	private volatile PacketManager packetManager;
 
 	public PiggyClient()
 	{
@@ -35,6 +37,16 @@ public class PiggyClient implements Runnable
 		return connected;
 	}
 
+	public boolean hasPacketManager()
+	{
+		return packetManager != null;
+	}
+	
+	public PacketManager getPacketManager()
+	{
+		return packetManager;
+	}
+
 	@Override
 	public void run()
 	{
@@ -42,19 +54,18 @@ public class PiggyClient implements Runnable
 		{
 			socket = Gdx.net.newClientSocket(Protocol.TCP, "192.168.2.20",
 					12050, socketHints);
-			System.out.println("1");
-			output = new ObjectOutputStream(socket.getOutputStream());
-			output.flush();
-			System.out.println("2");
+			output = new ObjectOutputStream(socket.getOutputStream());//not flushed
 			input = new ObjectInputStream(socket.getInputStream());
-			System.out.println("3");
+			this.packetManager = new PacketManager(input, output);
 			this.connected = true;
-		} catch (GdxRuntimeException exception)
+		} catch (GdxRuntimeException e)
 		{
+			e.printStackTrace();
 			this.connected = false;
 		} catch (IOException e)
 		{
 			e.printStackTrace();
+			this.connected = false;
 		}
 	}
 }

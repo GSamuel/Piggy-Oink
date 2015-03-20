@@ -13,7 +13,6 @@ public class NetWorkManager implements Disposable
 	{
 		connectionState = EnumConnectionState.HANDSHAKING;
 		netHandler = new NetHandlerHandshakeTCP();
-
 		this.packetManager = packetManager;
 	}
 

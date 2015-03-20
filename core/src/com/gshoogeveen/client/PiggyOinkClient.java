@@ -7,6 +7,7 @@ import com.gshoogeveen.client.input.FirstInputProcessor;
 import com.gshoogeveen.client.renderer.WorldRenderer;
 import com.gshoogeveen.client.textures.TextureBuilder;
 import com.gshoogeveen.entity.Entity;
+import com.gshoogeveen.network.NetWorkManager;
 import com.gshoogeveen.network.PacketManager;
 import com.gshoogeveen.network.StringPacket;
 import com.gshoogeveen.network.play.client.C00PacketKeepAlive;
@@ -33,26 +34,27 @@ public class PiggyOinkClient extends ApplicationAdapter
 	// Connection
 	private PacketManager packetManager;
 	private PiggyClient client;
-	
+	private NetWorkManager networkManager;
+
 	private double rand = Math.random();
 
 	@Override
 	public void create()
 	{
 		// Assets
-		//audio = new AudioManager();
-		//audio.play();
-		//texBuilderV2 = new TextureBuilder();
+		// audio = new AudioManager();
+		// audio.play();
+		// texBuilderV2 = new TextureBuilder();
 
 		// Model
-		//world = new WorldClient();
-		//WorldGen.genererateSimpleWorld(world);
+		// world = new WorldClient();
+		// WorldGen.genererateSimpleWorld(world);
 		// player = (Entity) EntityFactory.newCharacter();
 		// world.setPlayer(player);
 
 		// View
-		//stage = new Stage();
-		//worldRenderer = new WorldRenderer(stage, world);
+		// stage = new Stage();
+		// worldRenderer = new WorldRenderer(stage, world);
 
 		// Input
 		// iProcessor = new FirstInputProcessor(stage, player);
@@ -74,17 +76,17 @@ public class PiggyOinkClient extends ApplicationAdapter
 		// world.update();//model
 		if (client.connected())
 			worldRenderer.render();// view
-		
-		if(packetManager == null && client.hasPacketManager())
+
+		if (packetManager == null && client.hasPacketManager())
 		{
 			packetManager = client.getPacketManager();
 			packetManager.start();
 		}
-		
-		if(packetManager != null)
+
+		if (packetManager != null)
 		{
 			StringPacket p = new StringPacket();
-			p.setName(""+rand);
+			p.setName("" + rand);
 			packetManager.sendPacket(p);
 			C00PacketKeepAlive p2 = new C00PacketKeepAlive();
 			packetManager.sendPacket(p2);

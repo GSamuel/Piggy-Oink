@@ -8,7 +8,6 @@ import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Pixmap.Format;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
@@ -22,12 +21,12 @@ public class PiggyOink extends ApplicationAdapter
 {
 	private Skin skin;
 	private Stage stage;
-	private SpriteBatch batch;
+	//private SpriteBatch batch;
 	
 	@Override
 	public void create()
 	{
-		batch = new SpriteBatch();
+		//batch = new SpriteBatch();
 		stage = new Stage();
 		Gdx.input.setInputProcessor(stage);
 		

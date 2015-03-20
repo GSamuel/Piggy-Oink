@@ -1,8 +1,5 @@
 package com.gshoogeveen.server;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 import com.badlogic.gdx.Gdx;
@@ -16,8 +13,6 @@ public class PiggyServer implements Runnable
 {
 
 	private ServerSocket serverSocket;
-	private ObjectOutputStream output;
-	private ObjectInputStream input;
 	private boolean running;
 	
 	private ConcurrentLinkedQueue<PacketManager> packetManagers;

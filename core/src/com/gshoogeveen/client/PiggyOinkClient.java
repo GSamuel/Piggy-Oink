@@ -10,9 +10,7 @@ import com.gshoogeveen.entity.Entity;
 import com.gshoogeveen.network.PacketManager;
 import com.gshoogeveen.network.StringPacket;
 import com.gshoogeveen.network.play.client.C00PacketKeepAlive;
-import com.gshoogeveen.world.World;
 import com.gshoogeveen.world.WorldClient;
-import com.gshoogeveen.world.WorldGen;
 
 public class PiggyOinkClient extends ApplicationAdapter
 {

@@ -1,9 +1,5 @@
 package com.gshoogeveen.client;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Net.Protocol;
 import com.badlogic.gdx.net.Socket;
@@ -16,8 +12,6 @@ public class PiggyClient implements Runnable
 	private Socket socket;
 	private SocketHints socketHints;
 	private boolean connected = false;
-	private ObjectOutputStream output;
-	private ObjectInputStream input;
 	private volatile PacketManager packetManager;
 
 	public PiggyClient()
@@ -54,8 +48,6 @@ public class PiggyClient implements Runnable
 		{
 			socket = Gdx.net.newClientSocket(Protocol.TCP, "192.168.2.20",
 					12050, socketHints);
-			output = new ObjectOutputStream(socket.getOutputStream());//not flushed
-			input = new ObjectInputStream(socket.getInputStream());
 			this.packetManager = new PacketManager(socket);
 			this.packetManager.openStreams();
 			this.connected = true;
@@ -63,10 +55,6 @@ public class PiggyClient implements Runnable
 		{
 			e.printStackTrace();
 			this.connected = false;
-		} catch (IOException e)
-		{
-			e.printStackTrace();
-			this.connected = false;
-		}
+		} 
 	}
 }

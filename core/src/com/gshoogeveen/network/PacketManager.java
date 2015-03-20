@@ -39,6 +39,11 @@ public class PacketManager implements Runnable, Disposable
 			}
 		}
 	}
+	
+	public String getRemoteAdress()
+	{
+		return socket.getRemoteAddress();
+	}
 
 	public void start()
 	{

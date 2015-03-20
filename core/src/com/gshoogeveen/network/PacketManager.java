@@ -5,33 +5,61 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
-public class PacketManager implements Runnable
+import com.badlogic.gdx.net.Socket;
+import com.badlogic.gdx.utils.Disposable;
+
+public class PacketManager implements Runnable, Disposable
 {
 	private ObjectOutputStream output;
 	private ObjectInputStream input;
 
 	private ConcurrentLinkedQueue<Packet> inboundPackets;
+	private boolean streamsOpen = false;
 	private boolean receiving = false;
-	private boolean canReceive = true;
-	private boolean canSend = true;
+	private Socket socket;
 
-	public PacketManager(ObjectInputStream input, ObjectOutputStream output)
+	public PacketManager(Socket socket)
 	{
-		this.input = input;
-		this.output = output;
-		inboundPackets = new ConcurrentLinkedQueue<Packet>();
+		this.socket = socket;
+	}
+
+	public void openStreams()
+	{
+		if (socket.isConnected())
+		{
+			try
+			{
+				output = new ObjectOutputStream(socket.getOutputStream());
+				input = new ObjectInputStream(socket.getInputStream());
+				inboundPackets = new ConcurrentLinkedQueue<Packet>();
+				streamsOpen = true;
+			} catch (IOException e)
+			{
+				e.printStackTrace();
+			}
+		}
 	}
 
 	public void start()
 	{
-		if (!receiving && canReceive)
+		if (!receiving && streamsOpen)
 		{
 			receiving = true;
 			new Thread(this).start();
 		}
 	}
 
-	public boolean avaible()
+	public void isConnected()
+	{
+		socket.isConnected();
+	}
+
+	public boolean streamsOpen()
+	{
+		return streamsOpen;
+	}
+	
+	public boolean packetAvaible()
 	{
 		return inboundPackets.size() > 0;
 	}
@@ -43,7 +71,7 @@ public class PacketManager implements Runnable
 
 	public void sendPacket(Packet p)
 	{
-		if (canSend)
+		if (streamsOpen)
 			try
 			{
 				output.writeObject(p);
@@ -51,14 +79,13 @@ public class PacketManager implements Runnable
 			} catch (IOException e)
 			{
 				e.printStackTrace();
-				canSend = false;
 			}
 	}
 
 	@Override
 	public void run()
 	{
-		while (receiving && canReceive)
+		while (receiving && streamsOpen)
 		{
 			try
 			{
@@ -70,8 +97,15 @@ public class PacketManager implements Runnable
 			{
 				e.printStackTrace();
 				receiving = false;
-				canReceive = false;
 			}
 		}
+	}
+
+	@Override
+	public void dispose()
+	{
+		socket.dispose();
+		streamsOpen = false;
+		receiving = false;
 	}
 }

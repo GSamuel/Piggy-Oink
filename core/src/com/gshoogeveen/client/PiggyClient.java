@@ -56,7 +56,8 @@ public class PiggyClient implements Runnable
 					12050, socketHints);
 			output = new ObjectOutputStream(socket.getOutputStream());//not flushed
 			input = new ObjectInputStream(socket.getInputStream());
-			this.packetManager = new PacketManager(input, output);
+			this.packetManager = new PacketManager(socket);
+			this.packetManager.openStreams();
 			this.connected = true;
 		} catch (GdxRuntimeException e)
 		{

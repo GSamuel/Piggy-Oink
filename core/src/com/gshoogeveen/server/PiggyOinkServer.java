@@ -45,7 +45,7 @@ public class PiggyOinkServer extends ApplicationAdapter
 		}
 		
 		for(PacketManager pm: packetManagers)
-			while(pm.avaible())
+			while(pm.packetAvaible())
 				pm.receivePacket().show();
 		
 		//world.update();//model

@@ -62,15 +62,7 @@ public class PiggyServer implements Runnable
 			// Create a socket
 			socket = serverSocket.accept(null);
 			System.out.println(socket.getRemoteAddress());
-			try
-			{
-				output = new ObjectOutputStream(socket.getOutputStream());
-				input = new ObjectInputStream(socket.getInputStream());
-				packetManagers.add(	new PacketManager(input, output));
-			} catch (IOException e)
-			{
-				e.printStackTrace();
-			}
+			packetManagers.add(	new PacketManager(socket));
 		}
 	}
 

@@ -3,16 +3,16 @@ package com.gshoogeveen.network;
 import com.badlogic.gdx.utils.Disposable;
 import com.gshoogeveen.server.network.NetHandlerHandshakeTCP;
 
-public class NetWorkManager implements Disposable
+public class NetworkManager implements Disposable
 {
 	private EnumConnectionState connectionState;
 	private INetHandler netHandler;
 	private PacketManager packetManager;
 
-	public NetWorkManager(PacketManager packetManager)
+	public NetworkManager(PacketManager packetManager)
 	{
 		connectionState = EnumConnectionState.HANDSHAKING;
-		netHandler = new NetHandlerHandshakeTCP();
+		netHandler = new NetHandlerHandshakeTCP(this);
 		this.packetManager = packetManager;
 	}
 

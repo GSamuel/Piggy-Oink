@@ -7,9 +7,10 @@ import com.gshoogeveen.client.input.FirstInputProcessor;
 import com.gshoogeveen.client.renderer.WorldRenderer;
 import com.gshoogeveen.client.textures.TextureBuilder;
 import com.gshoogeveen.entity.Entity;
-import com.gshoogeveen.network.NetWorkManager;
+import com.gshoogeveen.network.NetworkManager;
 import com.gshoogeveen.network.PacketManager;
 import com.gshoogeveen.network.StringPacket;
+import com.gshoogeveen.network.handshake.client.C00PacketHandshake;
 import com.gshoogeveen.network.play.client.C00PacketKeepAlive;
 import com.gshoogeveen.world.WorldClient;
 
@@ -29,12 +30,10 @@ public class PiggyOinkClient extends ApplicationAdapter
 
 	// Objects / Model
 	private WorldClient world;
-	private Entity player;
 
 	// Connection
-	private PacketManager packetManager;
+	private NetworkManager networkManager;
 	private PiggyClient client;
-	private NetWorkManager networkManager;
 
 	private double rand = Math.random();
 
@@ -74,32 +73,28 @@ public class PiggyOinkClient extends ApplicationAdapter
 		super.render();
 		// iProcessor.update();//input
 		// world.update();//model
-		if (client.connected())
-			worldRenderer.render();// view
+		//if (client.connected())
+			//worldRenderer.render();// view
 
-		if (packetManager == null && client.hasPacketManager())
-		{
-			packetManager = client.getPacketManager();
-			packetManager.start();
-		}
+		if (networkManager == null && client.hasNetworkManager())
+			networkManager = client.getNetworkManager();
 
-		if (packetManager != null)
+		if (networkManager != null)
 		{
-			StringPacket p = new StringPacket();
-			p.setName("" + rand);
-			packetManager.sendPacket(p);
+			C00PacketHandshake p= new C00PacketHandshake();
+			networkManager.sendPacket(p);
 			C00PacketKeepAlive p2 = new C00PacketKeepAlive();
-			packetManager.sendPacket(p2);
+			networkManager.sendPacket(p2);
 		}
 	}
 
 	@Override
 	public void dispose()
 	{
-		audio.dispose();
-		texBuilderV2.dispose();
-		worldRenderer.dispose();
-		stage.dispose();
+		//audio.dispose();
+		//texBuilderV2.dispose();
+		//worldRenderer.dispose();
+		//stage.dispose();
 	}
 
 }

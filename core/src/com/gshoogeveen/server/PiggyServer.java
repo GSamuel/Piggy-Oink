@@ -7,6 +7,7 @@ import com.badlogic.gdx.Net.Protocol;
 import com.badlogic.gdx.net.ServerSocket;
 import com.badlogic.gdx.net.ServerSocketHints;
 import com.badlogic.gdx.net.Socket;
+import com.gshoogeveen.network.NetworkManager;
 import com.gshoogeveen.network.PacketManager;
 
 public class PiggyServer implements Runnable
@@ -15,11 +16,11 @@ public class PiggyServer implements Runnable
 	private ServerSocket serverSocket;
 	private boolean running;
 	
-	private ConcurrentLinkedQueue<PacketManager> packetManagers;
+	private ConcurrentLinkedQueue<NetworkManager> networkManagers;
 
 	public PiggyServer()
 	{
-		packetManagers = new ConcurrentLinkedQueue<PacketManager>();
+		networkManagers = new ConcurrentLinkedQueue<NetworkManager>();
 		
 		ServerSocketHints serverSocketHint = new ServerSocketHints();
 		serverSocketHint.acceptTimeout = 0;
@@ -37,14 +38,14 @@ public class PiggyServer implements Runnable
 		}
 	}
 	
-	public boolean hasPacketManager()
+	public boolean hasNetworkManager()
 	{
-		return packetManagers.size()>0;
+		return networkManagers.size()>0;
 	}
 	
-	public PacketManager getPacketManager()
+	public NetworkManager getNetworkManager()
 	{
-		return packetManagers.remove();
+		return networkManagers.remove();
 	}
 
 	@Override
@@ -57,7 +58,7 @@ public class PiggyServer implements Runnable
 			// Create a socket
 			socket = serverSocket.accept(null);
 			System.out.println(socket.getRemoteAddress());
-			packetManagers.add(	new PacketManager(socket));
+			networkManagers.add(	new NetworkManager(new PacketManager(socket)));
 		}
 	}
 

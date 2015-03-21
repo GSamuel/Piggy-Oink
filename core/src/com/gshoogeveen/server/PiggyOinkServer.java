@@ -3,6 +3,7 @@ package com.gshoogeveen.server;
 import java.util.ArrayList;
 
 import com.badlogic.gdx.ApplicationAdapter;
+import com.gshoogeveen.network.NetworkManager;
 import com.gshoogeveen.network.PacketManager;
 import com.gshoogeveen.world.WorldGen;
 import com.gshoogeveen.world.WorldServer;
@@ -14,12 +15,12 @@ public class PiggyOinkServer extends ApplicationAdapter
 	
 	//Connection
 	private PiggyServer server;
-	private ArrayList<PacketManager> packetManagers;
+	private ArrayList<NetworkManager> networkManagers;
 
 	@Override
 	public void create()
 	{
-		packetManagers = new ArrayList<PacketManager>();
+		networkManagers = new ArrayList<NetworkManager>();
 		
 		// Model
 		world = new WorldServer();
@@ -37,16 +38,14 @@ public class PiggyOinkServer extends ApplicationAdapter
 	public void render()
 	{
 		super.render();
-		while(server.hasPacketManager())
+		while(server.hasNetworkManager())
 		{
-			PacketManager packetManager = server.getPacketManager();
-			packetManager.start();
-			packetManagers.add(packetManager);
+			NetworkManager networkManager = server.getNetworkManager();
+			networkManagers.add(networkManager);
 		}
 		
-		for(PacketManager pm: packetManagers)
-			while(pm.packetAvaible())
-				pm.receivePacket().show();
+		for(NetworkManager n: networkManagers)
+			n.processPackets();
 		
 		//world.update();//model
 	}

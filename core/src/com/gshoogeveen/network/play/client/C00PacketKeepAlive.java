@@ -30,7 +30,7 @@ public class C00PacketKeepAlive extends Packet
 	
 	private void processPacket(INetHandlerPlayServer handler)
 	{
-		
+		handler.
 	}
 	
 	@Override

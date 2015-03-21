@@ -21,6 +21,8 @@ public class PacketManager implements Runnable, Disposable
 	public PacketManager(Socket socket)
 	{
 		this.socket = socket;
+		this.openStreams();
+		this.start();
 	}
 
 	public void openStreams()

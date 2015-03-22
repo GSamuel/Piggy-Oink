@@ -38,11 +38,4 @@ public class S00PacketKeepAlive extends Packet
 	{
 		processPacket((INetHandlerPlayClient) handler);
 	}
-
-	@Override
-	public void show()
-	{
-		System.out.println("Keep Server Alive!");
-	}
-
 }

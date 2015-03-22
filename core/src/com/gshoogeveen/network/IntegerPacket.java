@@ -30,13 +30,7 @@ public class IntegerPacket extends Packet
 	{
 		oos.writeInt(value);
 	}
-
-	@Override
-	public void show()
-	{
-		System.out.println(value);
-	}
-
+	
 	@Override
 	public void processPacket(INetHandler handler)
 	{

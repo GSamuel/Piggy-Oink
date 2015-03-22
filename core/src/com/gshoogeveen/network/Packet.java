@@ -17,6 +17,4 @@ public abstract class Packet implements Serializable
     protected abstract void writeObject(ObjectOutputStream oos) throws IOException;
     
     public abstract void processPacket(INetHandler handler);
-    
-    public abstract void show();
 }

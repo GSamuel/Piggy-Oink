@@ -39,11 +39,4 @@ public class C00PacketHandshake extends Packet
 	{	
 		this.processPacket((INetHandlerHandshakeServer)handler);
 	}
-
-	@Override
-	public void show()
-	{
-		System.out.println("shake shake shake");
-	}
-
 }

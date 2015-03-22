@@ -23,7 +23,7 @@ public class NetHandlerHandshakeTCP implements INetHandlerHandshakeServer
 	@Override
 	public void processHandshake(C00PacketHandshake handshake)
 	{
-		//System.out.println("nice warm hands <3");
+
 	}
 
 }

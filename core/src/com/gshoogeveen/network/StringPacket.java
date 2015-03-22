@@ -33,12 +33,6 @@ public class StringPacket extends Packet
 	}
 
 	@Override
-	public void show()
-	{
-		System.out.println(name);
-	}
-
-	@Override
 	public void processPacket(INetHandler handler)
 	{
 		

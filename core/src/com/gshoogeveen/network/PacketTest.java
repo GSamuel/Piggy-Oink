@@ -37,9 +37,9 @@ public class PacketTest
 			Packet p2 = (Packet) ois.readObject();
 			ois.close();
 			System.out.println("Packet Object Read=" + p1);
-			p1.show();
+			System.out.println(p1.getClass().toString());
 			System.out.println("Packet Object Read=" + p2);
-			p2.show();
+			System.out.println(p2.getClass().toString());
 		} catch (ClassNotFoundException e)
 		{
 			e.printStackTrace();

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.gshoogeveen.network.NetworkManager;
+import com.gshoogeveen.server.dedicated.DefaultServerProperties;
 import com.gshoogeveen.server.dedicated.PropertyManager;
 import com.gshoogeveen.world.WorldGen;
 import com.gshoogeveen.world.WorldServer;
@@ -11,6 +12,7 @@ import com.gshoogeveen.world.WorldServer;
 public class PiggyOinkServer extends ApplicationAdapter
 {
 	// Objects / Model
+	private PropertyManager serverProperties;
 	private WorldServer world;
 	
 	//Connection
@@ -20,11 +22,9 @@ public class PiggyOinkServer extends ApplicationAdapter
 	@Override
 	public void create()
 	{
-		PropertyManager propManager = new PropertyManager("server.properties");
-		propManager.showAll();
-		propManager.readPropertyFile();
-		propManager.showAll();
-		propManager.writePropertyFile();
+		serverProperties = new PropertyManager("server.properties", new DefaultServerProperties());
+		serverProperties.readPropertyFile();
+		serverProperties.writePropertyFile();
 		
 		networkManagers = new ArrayList<NetworkManager>();
 		
@@ -36,7 +36,7 @@ public class PiggyOinkServer extends ApplicationAdapter
 		world.setPlayer(player);*/
 		
 		//Server Connection
-		server = new PiggyServer();
+		server = new PiggyServer(serverProperties);
 		server.startServer();
 	}
 

@@ -9,6 +9,9 @@ import com.gshoogeveen.client.textures.TextureBuilder;
 import com.gshoogeveen.network.NetworkManager;
 import com.gshoogeveen.network.handshake.client.C00PacketHandshake;
 import com.gshoogeveen.network.play.client.C00PacketKeepAlive;
+import com.gshoogeveen.server.dedicated.DefaultClientProperties;
+import com.gshoogeveen.server.dedicated.DefaultServerProperties;
+import com.gshoogeveen.server.dedicated.PropertyManager;
 import com.gshoogeveen.world.WorldClient;
 
 public class PiggyOinkClient extends ApplicationAdapter
@@ -26,6 +29,7 @@ public class PiggyOinkClient extends ApplicationAdapter
 	private FirstInputProcessor iProcessor;
 
 	// Objects / Model
+	private PropertyManager clientProperties;
 	private WorldClient world;
 
 	// Connection
@@ -60,7 +64,11 @@ public class PiggyOinkClient extends ApplicationAdapter
 		// Gdx.input.setInputProcessor(im);
 
 		// Server Connection
-		client = new PiggyClient();
+		clientProperties = new PropertyManager("client.properties", new DefaultClientProperties());
+		clientProperties.readPropertyFile();
+		clientProperties.writePropertyFile();
+		
+		client = new PiggyClient(clientProperties);
 		client.connect();
 	}
 

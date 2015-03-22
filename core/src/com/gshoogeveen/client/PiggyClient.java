@@ -7,6 +7,7 @@ import com.badlogic.gdx.net.SocketHints;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.gshoogeveen.network.NetworkManager;
 import com.gshoogeveen.network.PacketManager;
+import com.gshoogeveen.server.dedicated.PropertyManager;
 
 public class PiggyClient implements Runnable
 {
@@ -14,9 +15,11 @@ public class PiggyClient implements Runnable
 	private SocketHints socketHints;
 	private boolean connected = false;
 	private volatile NetworkManager networkManager;
+	private PropertyManager clientProperties;
 
-	public PiggyClient()
+	public PiggyClient(PropertyManager clientProperties)
 	{
+		this.clientProperties = clientProperties;
 		socketHints = new SocketHints();
 		socketHints.connectTimeout = 4000;
 	}
@@ -47,10 +50,8 @@ public class PiggyClient implements Runnable
 	{
 		try
 		{
-			//192.168.2.20
-			//84.85.165.9
-			socket = Gdx.net.newClientSocket(Protocol.TCP, "192.168.2.20",
-					12050, socketHints);
+			socket = Gdx.net.newClientSocket(Protocol.TCP, clientProperties.getProperty("server-ip"),
+					clientProperties.getIntegerProperty("server-port"), socketHints);
 			this.networkManager = new NetworkManager(new PacketManager(socket));
 			this.connected = true;
 		} catch (GdxRuntimeException e)

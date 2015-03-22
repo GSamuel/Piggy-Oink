@@ -16,15 +16,20 @@ public class PropertyManager
 	private String fileName;
 	private static final Logger logger = LogManagerCore.getLogger(PropertyManager.class);
 
-	public PropertyManager(String fileName)
+	public PropertyManager(String fileName, Properties properties)
 	{
 		this.fileName = fileName;
-		properties = new Properties();
+		this.properties = properties;
 	}
 	
-	public Object getProperty(Object key)
+	public String getProperty(String key)
 	{
-		return properties.get(key);
+		return properties.getProperty(key);
+	}
+	
+	public int getIntegerProperty(String key)
+	{
+		return Integer.parseInt(properties.getProperty(key));
 	}
 	
 	public void putProperty(Object key, Object value)

@@ -11,25 +11,29 @@ import com.gshoogeveen.logging.LogManagerCore;
 import com.gshoogeveen.logging.Logger;
 import com.gshoogeveen.network.NetworkManager;
 import com.gshoogeveen.network.PacketManager;
+import com.gshoogeveen.server.dedicated.PropertyManager;
 
 public class PiggyServer implements Runnable
 {
 
 	private ServerSocket serverSocket;
+	private PropertyManager serverProperties;
 	private boolean running;
 	
 	private ConcurrentLinkedQueue<NetworkManager> networkManagers;
 
 	private static final Logger logger = LogManagerCore.getLogger(PiggyServer.class);
 
-	public PiggyServer()
+	public PiggyServer(PropertyManager serverProperties)
 	{
+		this.serverProperties = serverProperties;
+		
 		networkManagers = new ConcurrentLinkedQueue<NetworkManager>();
 		
 		ServerSocketHints serverSocketHint = new ServerSocketHints();
 		serverSocketHint.acceptTimeout = 0;
 
-		serverSocket = Gdx.net.newServerSocket(Protocol.TCP, 12050,
+		serverSocket = Gdx.net.newServerSocket(Protocol.TCP, serverProperties.getIntegerProperty("server-port"),
 				serverSocketHint);
 	}
 

@@ -40,10 +40,12 @@ public class PacketManager implements Runnable, Disposable
 				output = new ObjectOutputStream(socket.getOutputStream());
 				input = new ObjectInputStream(socket.getInputStream());
 				streamsOpen = true;
+				
+				logger.debug("established connection with: "+socket.getRemoteAddress());
+				
 			} catch (IOException e)
 			{
-				logger.error("IOException: cant open objectStreams");
-				//e.printStackTrace();
+				logger.error("can't opens streams with: "+socket.getRemoteAddress());
 			}
 		}
 	}
@@ -91,8 +93,8 @@ public class PacketManager implements Runnable, Disposable
 				output.flush();
 			} catch (IOException e)
 			{
-				logger.error("IOException: can't send package, disconnected");
-				//e.printStackTrace();
+				logger.error("can't send packet to: "+socket.getRemoteAddress());
+				streamsOpen = false;
 			}
 	}
 
@@ -106,13 +108,12 @@ public class PacketManager implements Runnable, Disposable
 				inboundPackets.add((Packet) input.readObject());
 			} catch (ClassNotFoundException e)
 			{
-				logger.error("ClassNotFoundException: received unrecognised package");
-				//e.printStackTrace();
+				logger.error("received unrecogniced package from: "+socket.getRemoteAddress());
 			} catch (IOException e)
 			{
-				logger.error("IOException: cant' receive packages, diconnected");
-				//e.printStackTrace();
+				logger.error("can't receive packets from: "+socket.getRemoteAddress());
 				receiving = false;
+				streamsOpen = false;
 			}
 		}
 	}

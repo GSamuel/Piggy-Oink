@@ -1,6 +1,5 @@
 package com.gshoogeveen.logging;
 
-import com.badlogic.gdx.Gdx;
 
 import android.util.Log;
 
@@ -17,8 +16,7 @@ public class LoggerAndroid implements Logger
 	@Override
 	public void error(Object message)
 	{
-		Gdx.app.log(tag, message.toString());
-		//Log.e(name, message.toString());
+		Log.e(tag, message.toString());
 	}
 
 	@Override
@@ -43,6 +41,12 @@ public class LoggerAndroid implements Logger
 	public void trace(Object message)
 	{
 		Log.i(tag, message.toString());
+	}
+
+	@Override
+	public void setLevel(Level level)
+	{
+		//nothing here yet			
 	}
 
 }

@@ -1,8 +1,9 @@
 package com.gshoogeveen.logging;
 
+
 public interface LogManager
 {
-	Logger getLogger(Class<?> class1);
+	public Logger getLogger(Class<?> class1);
 
-	Logger getLogger(String name);
+	public Logger getLogger(String name);	
 }

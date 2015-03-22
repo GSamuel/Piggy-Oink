@@ -2,6 +2,8 @@ package com.gshoogeveen.network;
 
 import java.util.HashMap;
 
+import com.gshoogeveen.logging.LogManagerCore;
+import com.gshoogeveen.logging.Logger;
 import com.gshoogeveen.network.handshake.INetHandlerHandshakeServer;
 import com.gshoogeveen.network.handshake.client.C00PacketHandshake;
 import com.gshoogeveen.network.play.INetHandlerPlayServer;
@@ -10,6 +12,7 @@ import com.gshoogeveen.network.play.client.C00PacketKeepAlive;
 
 public enum EnumConnectionState
 {
+	
 	HANDSHAKING()
 	{
 		{
@@ -26,6 +29,8 @@ public enum EnumConnectionState
 	
 	//private static final HashMap<Class<? extends Packet>, Class<? extends INetHandler>> map = new HashMap<Class<? extends Packet>, Class<? extends INetHandler>>();
 	private final HashMap<Class<? extends Packet>, Class<? extends INetHandler>> map;
+
+	private static final Logger logger = LogManagerCore.getLogger(EnumConnectionState.class);
 	
 	private EnumConnectionState()
 	{
@@ -46,10 +51,9 @@ public enum EnumConnectionState
 		if(map.get(packetClass) == null)
 		{
 			map.put(packetClass, handlerClass);
-			System.out.println(packetClass+":"+handlerClass);
 		}
 		else
-			System.out.println("packet already added!");
+			logger.error("packet already added: "+packetClass+" : "+handlerClass);
 		
 	}
 	

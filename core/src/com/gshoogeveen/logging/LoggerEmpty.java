@@ -1,5 +1,6 @@
 package com.gshoogeveen.logging;
 
+
 public class LoggerEmpty implements Logger
 {
 
@@ -25,6 +26,11 @@ public class LoggerEmpty implements Logger
 
 	@Override
 	public void trace(Object message)
+	{
+	}
+
+	@Override
+	public void setLevel(Level level)
 	{
 	}
 

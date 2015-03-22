@@ -7,6 +7,8 @@ import com.badlogic.gdx.Net.Protocol;
 import com.badlogic.gdx.net.ServerSocket;
 import com.badlogic.gdx.net.ServerSocketHints;
 import com.badlogic.gdx.net.Socket;
+import com.gshoogeveen.logging.LogManagerCore;
+import com.gshoogeveen.logging.Logger;
 import com.gshoogeveen.network.NetworkManager;
 import com.gshoogeveen.network.PacketManager;
 
@@ -17,6 +19,8 @@ public class PiggyServer implements Runnable
 	private boolean running;
 	
 	private ConcurrentLinkedQueue<NetworkManager> networkManagers;
+
+	private static final Logger logger = LogManagerCore.getLogger(PiggyServer.class);
 
 	public PiggyServer()
 	{
@@ -57,7 +61,6 @@ public class PiggyServer implements Runnable
 		{
 			// Create a socket
 			socket = serverSocket.accept(null);
-			System.out.println(socket.getRemoteAddress());
 			networkManagers.add(	new NetworkManager(new PacketManager(socket)));
 		}
 	}

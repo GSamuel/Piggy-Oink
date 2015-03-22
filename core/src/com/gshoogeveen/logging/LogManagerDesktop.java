@@ -1,5 +1,6 @@
 package com.gshoogeveen.logging;
 
+
 public class LogManagerDesktop implements LogManager
 {
 	@Override
@@ -13,5 +14,6 @@ public class LogManagerDesktop implements LogManager
 	{
 		return new LoggerDesktop(org.apache.log4j.LogManager.getLogger(name));
 	}
+
 
 }

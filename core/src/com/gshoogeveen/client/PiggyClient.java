@@ -47,6 +47,8 @@ public class PiggyClient implements Runnable
 	{
 		try
 		{
+			//192.168.2.20
+			//84.85.165.9
 			socket = Gdx.net.newClientSocket(Protocol.TCP, "192.168.2.20",
 					12050, socketHints);
 			this.networkManager = new NetworkManager(new PacketManager(socket));

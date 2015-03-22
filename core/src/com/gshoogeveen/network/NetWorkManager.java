@@ -33,8 +33,13 @@ public class NetworkManager implements Disposable
 
 	public void processPackets()
 	{
+		Packet packet;
 		while (packetManager.packetAvaible())
-			packetManager.receivePacket().processPacket(netHandler);
+		{
+			packet = packetManager.receivePacket();
+			if (connectionState.validPacketWithHandler(packet, netHandler))
+				packet.processPacket(netHandler);
+		}
 	}
 
 	public void sendPacket(Packet p)

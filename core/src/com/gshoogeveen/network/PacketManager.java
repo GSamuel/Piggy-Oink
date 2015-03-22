@@ -7,6 +7,8 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 
 import com.badlogic.gdx.net.Socket;
 import com.badlogic.gdx.utils.Disposable;
+import com.gshoogeveen.logging.LogManagerCore;
+import com.gshoogeveen.logging.Logger;
 
 public class PacketManager implements Runnable, Disposable
 {
@@ -17,10 +19,14 @@ public class PacketManager implements Runnable, Disposable
 	private boolean streamsOpen = false;
 	private boolean receiving = false;
 	private Socket socket;
+	
+	private static final Logger logger = LogManagerCore.getLogger(PacketManager.class);
+
 
 	public PacketManager(Socket socket)
 	{
 		this.socket = socket;
+		inboundPackets = new ConcurrentLinkedQueue<Packet>();
 		this.openStreams();
 		this.start();
 	}
@@ -33,11 +39,11 @@ public class PacketManager implements Runnable, Disposable
 			{
 				output = new ObjectOutputStream(socket.getOutputStream());
 				input = new ObjectInputStream(socket.getInputStream());
-				inboundPackets = new ConcurrentLinkedQueue<Packet>();
 				streamsOpen = true;
 			} catch (IOException e)
 			{
-				e.printStackTrace();
+				logger.error("IOException: cant open objectStreams");
+				//e.printStackTrace();
 			}
 		}
 	}
@@ -85,7 +91,8 @@ public class PacketManager implements Runnable, Disposable
 				output.flush();
 			} catch (IOException e)
 			{
-				e.printStackTrace();
+				logger.error("IOException: can't send package, disconnected");
+				//e.printStackTrace();
 			}
 	}
 
@@ -99,10 +106,12 @@ public class PacketManager implements Runnable, Disposable
 				inboundPackets.add((Packet) input.readObject());
 			} catch (ClassNotFoundException e)
 			{
-				e.printStackTrace();
+				logger.error("ClassNotFoundException: received unrecognised package");
+				//e.printStackTrace();
 			} catch (IOException e)
 			{
-				e.printStackTrace();
+				logger.error("IOException: cant' receive packages, diconnected");
+				//e.printStackTrace();
 				receiving = false;
 			}
 		}

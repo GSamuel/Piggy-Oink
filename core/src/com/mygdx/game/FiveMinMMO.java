@@ -57,7 +57,6 @@ public class FiveMinMMO extends ApplicationAdapter
 		audio = new AudioManager();
 		audio.play();
 		texBuilderV2 = new TextureBuilder();
-
 		
 		//Model
 		world = new World();

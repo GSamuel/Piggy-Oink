@@ -1,14 +1,10 @@
 package com.gshoogeveen.logging;
 
+
+
 public class LogManagerCore
 {
-	private static LogManager logManager = new LogManagerAndroid();// initialize with no logging
-	
-	public static void setLogManager(LogManager logManager)
-	{
-		LogManagerCore.logManager = logManager;
-		System.out.println(logManager.getClass());
-	}
+	public static LogManager logManager = new LogManagerEmpty();// initialize with no logging
 
 	public static Logger getLogger(Class<?> class1)
 	{

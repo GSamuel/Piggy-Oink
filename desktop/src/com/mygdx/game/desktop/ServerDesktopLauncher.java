@@ -10,7 +10,7 @@ public class ServerDesktopLauncher
 {
 	public static void main(String[] arg)
 	{
-		LogManagerCore.setLogManager(new LogManagerDesktop());
+		LogManagerCore.logManager = new LogManagerDesktop();
 		
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 

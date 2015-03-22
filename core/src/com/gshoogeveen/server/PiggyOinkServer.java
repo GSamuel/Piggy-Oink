@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.gshoogeveen.network.NetworkManager;
-import com.gshoogeveen.network.PacketManager;
 import com.gshoogeveen.world.WorldGen;
 import com.gshoogeveen.world.WorldServer;
 

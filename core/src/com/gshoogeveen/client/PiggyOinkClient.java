@@ -1,6 +1,6 @@
 package com.gshoogeveen.client;
 
-import com.badlogic.gdx.ApplicationAdapter;
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.gshoogeveen.client.audio.AudioManager;
 import com.gshoogeveen.client.input.FirstInputProcessor;
@@ -10,11 +10,10 @@ import com.gshoogeveen.network.NetworkManager;
 import com.gshoogeveen.network.handshake.client.C00PacketHandshake;
 import com.gshoogeveen.network.play.client.C00PacketKeepAlive;
 import com.gshoogeveen.server.dedicated.DefaultClientProperties;
-import com.gshoogeveen.server.dedicated.DefaultServerProperties;
 import com.gshoogeveen.server.dedicated.PropertyManager;
 import com.gshoogeveen.world.WorldClient;
 
-public class PiggyOinkClient extends ApplicationAdapter
+public class PiggyOinkClient extends Game
 {
 
 	// Resources

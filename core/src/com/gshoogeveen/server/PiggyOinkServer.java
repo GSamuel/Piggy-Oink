@@ -2,14 +2,14 @@ package com.gshoogeveen.server;
 
 import java.util.ArrayList;
 
-import com.badlogic.gdx.ApplicationAdapter;
+import com.badlogic.gdx.Game;
 import com.gshoogeveen.network.NetworkManager;
 import com.gshoogeveen.server.dedicated.DefaultServerProperties;
 import com.gshoogeveen.server.dedicated.PropertyManager;
 import com.gshoogeveen.world.WorldGen;
 import com.gshoogeveen.world.WorldServer;
 
-public class PiggyOinkServer extends ApplicationAdapter
+public class PiggyOinkServer extends Game
 {
 	// Objects / Model
 	private PropertyManager serverProperties;

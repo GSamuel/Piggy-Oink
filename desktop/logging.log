@@ -950,3 +950,6 @@
 2015-03-22 14:37:24 ERROR PacketManager:16 - can't receive packets from: /192.168.2.20:52465
 2015-03-22 14:53:28 DEBUG PacketManager:19 - established connection with: /192.168.2.2:47761
 2015-03-22 14:55:21 DEBUG PacketManager:19 - established connection with: /192.168.2.2:47769
+2015-03-22 14:57:39 DEBUG PacketManager:19 - established connection with: /192.168.2.20:52539
+2015-03-22 14:57:39 DEBUG PacketManager:19 - established connection with: /192.168.2.20:12050
+2015-03-22 14:57:40 ERROR PacketManager:14 - can't receive packets from: /192.168.2.20:52539
